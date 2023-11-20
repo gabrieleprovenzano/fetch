@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="postForm">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+        <label for="completed">Flag Completed:</label>
+        <input type="checkbox" id="completed" name="completed">
+        <button>Submit</button>
+    </form>
+
+    <script>
+         function submitForm() {
+            const title = document.getElementById('title').value;
+            const completed = document.getElementById('completed').checked;
+
+            const postData = { title, completed };
+
+            fetch('http://localhost:3000/createPost', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(postData),
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Post created successfully!');
+                } else {
+                    console.error('Failed to create post');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
